@@ -29,7 +29,14 @@ public class M_TextEffects : MonoBehaviour
 
     public void WriteText(string displayString, TextMeshProUGUI textField)
     {
-        submitPressed = false;
+        M_TextParser textParser = new M_TextParser();
+        List<M_TextCharacter> test = textParser.ParseText(displayString);
+        foreach (M_TextCharacter character in test)
+        {
+            print(character._character);
+        }
+
+        /*submitPressed = false;
         commands.Clear();
         this.displayString = displayString;
         this.textField = textField;
@@ -45,7 +52,7 @@ public class M_TextEffects : MonoBehaviour
         {
             StopCoroutine(runningAppear);
             runningAppear= StartCoroutine(Appear());
-        }
+        }*/
     }
 
     private IEnumerator Appear()
