@@ -10,17 +10,12 @@ using UnityEngine;
 public class M_TextParser
 {
     private List<M_TextCharacter> finishedString = new List<M_TextCharacter>();
+    public int4 defaulColor = new int4(255,255,255,255);
     public List<M_TextCharacter> ParseText(string parseString)
-    {
-        Parse(parseString);
-        return finishedString;
-    }
-
-    private void Parse(string parseString)
     {
         string effectString = "";
         M_Effects effects;
-        int4 color = new int4(0,0,0,255);
+        int4 color = defaulColor;
 
         for (int i = 0; i < parseString.Length; i++)
         {
@@ -28,6 +23,7 @@ public class M_TextParser
             {
                 if (parseString[i + 1] == '\\')
                 {
+                    finishedString.Add(new M_TextCharacter(parseString[i], M_Effects.normal, color));
                     i++;
                     continue;
                 }
@@ -41,7 +37,7 @@ public class M_TextParser
 
                 if (effectString.StartsWith("<color="))
                 {
-                    //Get color code from command and then split the string and convert the hexadecimals to int. Save the in in an int4. This int4 is used as color
+                    //Get color code from command and then split the string and convert the hexadecimals to int. Save the int in an int4. This int4 is used as color
                     Regex regex = new Regex(@"\#(?:[0-9a-fA-F]{4}){2,3}");
                     Match output = regex.Match(effectString);
                     string regexMatch = output.Value;
@@ -53,6 +49,11 @@ public class M_TextParser
                     color.z = int.Parse(stringArray[2], System.Globalization.NumberStyles.HexNumber);
                     color.w = int.Parse(stringArray[3], System.Globalization.NumberStyles.HexNumber);
                     
+                }
+
+                if (effectString.StartsWith("</color"))
+                {
+                    color = defaulColor;
                 }
                 switch (effectString)
                 {
@@ -67,7 +68,7 @@ public class M_TextParser
                         break;
                     
                     case "<shake>":
-                        while (parseString[i] != '<' || parseString[i+1] != '/' )
+                        while (parseString[i] != '<' || parseString[i+1] != '/')
                         {
                             i++;
                             finishedString.Add(new M_TextCharacter(parseString[i], M_Effects.shake, color));
@@ -88,5 +89,6 @@ public class M_TextParser
             effectString = "";
         }
         finishedString.RemoveAt(finishedString.Count - 1);
+        return finishedString;
     }
 }

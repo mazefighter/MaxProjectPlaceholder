@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class M_TextCharacter
 {
-    
-
     public M_Effects _effect { get; }
     public int4 _color { get; }
     public char _character { get; }

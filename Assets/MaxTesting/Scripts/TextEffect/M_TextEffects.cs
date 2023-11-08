@@ -2,16 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class M_TextEffects : MonoBehaviour
 {
     private static M_TextEffects instance;
+    private int appearIndex;
 
     [SerializeField]  private string displayString;
-    private TextMeshProUGUI textField;
+    
     public bool submitPressed;
-    private Dictionary<string, List<Vector2Int>> commands = new Dictionary<string, List<Vector2Int>>();
     private Coroutine runningAppear;
     private Coroutine runningEffect;
     private void Awake()
@@ -31,123 +32,78 @@ public class M_TextEffects : MonoBehaviour
     {
         M_TextParser textParser = new M_TextParser();
         List<M_TextCharacter> test = textParser.ParseText(displayString);
-        foreach (M_TextCharacter character in test)
-        {
-            print(character._character);
-        }
-
-        /*submitPressed = false;
-        commands.Clear();
         this.displayString = displayString;
-        this.textField = textField;
-        if (runningEffect != null)
-        {
-            StopCoroutine(runningEffect);
-        }
+        submitPressed = false;
         if (runningAppear == null)
         {
-            runningAppear= StartCoroutine(Appear());
+           runningAppear= StartCoroutine(Appear(test, textField));
         }
         else
         {
             StopCoroutine(runningAppear);
-            runningAppear= StartCoroutine(Appear());
-        }*/
+            runningAppear= StartCoroutine(Appear(test, textField));
+        }
+        
+        if (runningEffect == null)
+        {
+            runningEffect = StartCoroutine(PlayEffect(test, textField));
+        }
+        else
+        {
+            StopCoroutine(runningEffect);
+            runningEffect= StartCoroutine(PlayEffect(test, textField));
+        }
+        
     }
 
-    private IEnumerator Appear()
+    private IEnumerator Appear(List<M_TextCharacter> parsedText, TextMeshProUGUI textField)
     {
-        string prefix = "<color=#00000000>";
-        string postfix = "</color>";
-        string tmpText;
-        string commandString = "";
-        int commandStart = 0;
-        int commandEnd = 0;
-        bool getCommandString;
-
-        for (int i = 0; i < displayString.Length; i++)
+        textField.text = "";
+        appearIndex = 0;
+        string testString = "";
+        foreach (M_TextCharacter test in parsedText)
         {
-            if (displayString[i].Equals('<'))
-            {
-                //if not a statement to change text
-                if (displayString[i+1].Equals('<'))
-                {
-                    displayString = displayString.Remove(i + 1, 1);
-                    i++;
-                    continue;
-                }
-
-                if (!displayString[i+1].Equals('/'))
-                {
-                    commandString = "";
-                    commandStart = i;
-                    getCommandString = true;
-                }
-                else
-                {
-                    commandEnd = i;
-                    getCommandString = false;
-                    if (commands != null)
-                    {
-                        if (commands.ContainsKey(commandString))
-                        {
-                            List<Vector2Int> tempList = commands[commandString];
-                            tempList.Add(new(commandStart, commandEnd));
-                            commands[commandString] = tempList;
-                        }
-                        else
-                        {
-                            commands.Add(commandString, new List<Vector2Int>{new(commandStart, commandEnd)});
-                        }
-                    }
-                    else
-                    {
-                        commands.Add(commandString, new List<Vector2Int>{new(commandStart, commandEnd)});
-                    }
-                }
-                //if a statement to change text
-                commandString += displayString[i];
-                int startForDelete = i;
-                while (!displayString[i].Equals('>'))
-                {
-                    i++;
-                    if (getCommandString)
-                    {
-                        commandString += displayString[i];
-                    }
-                }
-
-                displayString = displayString.Remove(startForDelete, i + 1 - startForDelete);
-                i = startForDelete - 1;
-                continue;
-            }
-            
-            tmpText = displayString.Insert(i + 1, prefix);
-            tmpText += postfix;
-            textField.text = tmpText;
-            yield return new WaitForSeconds(0.02f);
+            testString += test._character;
         }
-
-        runningEffect = StartCoroutine(PlayEffect());
-
+        textField.text = testString;
+        yield return new WaitForSeconds(0.05f);
     }
     
-    private IEnumerator PlayEffect()
+    private IEnumerator PlayEffect(List<M_TextCharacter> parsedText,TextMeshProUGUI textField)
     {
         while (!submitPressed)
         {
             textField.ForceMeshUpdate();
             TMP_TextInfo textInfo = textField.textInfo;
-            
-            foreach (KeyValuePair<string, List<Vector2Int>> key in commands)
+            int position = 0;
+            foreach (M_TextCharacter character in parsedText)
             {
-                switch (key.Key)
+                switch (character._effect)
                 {
-                    case "<wobble>":
-                        Wobble(key.Value, textInfo);
+                    case M_Effects.wobble:
+                        Wobble(position, textInfo, character._color);
+                        position++;
                         break;
-                    case "<shake>":
-                        Shake(key.Value, textInfo);
+                    case M_Effects.shake:
+                        Shake(position, textInfo, character._color);
+                        position++;
+                        break;
+                    default:
+                        TMP_CharacterInfo charInfo = textInfo.characterInfo[position];
+                        
+                        TMP_MeshInfo meshInfo = textInfo.meshInfo[charInfo.materialReferenceIndex];
+
+                        if (charInfo.character == ' ')
+                        {
+                            position++;
+                            break;
+                        }
+
+                        for (int j = 0; j < 4; j++)
+                        {
+                            meshInfo.colors32[charInfo.vertexIndex + j] = new Color32((byte)character._color.x, (byte)character._color.y, (byte)character._color.z, (byte)character._color.w);
+                        }
+                        position++;
                         break;
                 }
             }
@@ -155,61 +111,56 @@ public class M_TextEffects : MonoBehaviour
             {
                 var meshInfo = textInfo.meshInfo[i];
                 meshInfo.mesh.vertices = meshInfo.vertices;
+                meshInfo.mesh.colors32 = meshInfo.colors32;
                 textField.UpdateGeometry(meshInfo.mesh, i);
             }
 
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.01f);
         }
     }
 
-    private void Shake(List<Vector2Int> startEnd, TMP_TextInfo textInfo)
+    private void Shake(int position, TMP_TextInfo textInfo, int4 color)
     {
-        foreach (Vector2Int Indexes in startEnd)
-        {
-            for (int i = Indexes.x; i <= Indexes.y; i++)
-            {
-                TMP_CharacterInfo charInfo = textInfo.characterInfo[i];
+        
+                TMP_CharacterInfo charInfo = textInfo.characterInfo[position];
+                
 
-                if (!charInfo.isVisible)
+                TMP_MeshInfo meshInfo = textInfo.meshInfo[charInfo.materialReferenceIndex];
+
+                if (charInfo.character == ' ')
                 {
-                    continue;
+                    return;
                 }
-
-                Vector3[] verts = textInfo.meshInfo[charInfo.materialReferenceIndex].vertices;
 
                 for (int j = 0; j < 4; j++)
                 {
-                    Vector3 orig = verts[charInfo.vertexIndex + j];
-                    verts[charInfo.vertexIndex + j] =
+                    Vector3 orig = meshInfo.vertices[charInfo.vertexIndex + j];
+                    meshInfo.vertices[charInfo.vertexIndex + j] =
                         orig + new Vector3(Mathf.Sin(Time.time * 2f + orig.x * 0.01f) * 10f, 0 , 0);
+                    meshInfo.colors32[charInfo.vertexIndex + j] = new Color32((byte)color.x, (byte)color.y, (byte)color.z, (byte)color.w);
                 }
-            }
-        }
     }
 
-    private void Wobble(List<Vector2Int> startEnd, TMP_TextInfo textInfo)
+    private void Wobble(int position, TMP_TextInfo textInfo, int4 color)
     {
-        foreach (Vector2Int Indexes in startEnd)
-        {
-            for (int i = Indexes.x; i <= Indexes.y; i++)
-            {
-                TMP_CharacterInfo charInfo = textInfo.characterInfo[i];
-
-                if (!charInfo.isVisible)
+        
+                TMP_CharacterInfo charInfo = textInfo.characterInfo[position];
+                
+                TMP_MeshInfo meshInfo = textInfo.meshInfo[charInfo.materialReferenceIndex];
+                
+                if (charInfo.character == ' ')
                 {
-                    continue;
+                    return;
                 }
-
-                Vector3[] verts = textInfo.meshInfo[charInfo.materialReferenceIndex].vertices;
 
                 for (int j = 0; j < 4; j++)
                 {
-                    Vector3 orig = verts[charInfo.vertexIndex + j];
-                    verts[charInfo.vertexIndex + j] =
-                        orig + new Vector3(0, Mathf.Sin(Time.time * 2f + orig.x * 0.01f) * 10f, 0);
+                    Vector3 orig = meshInfo.vertices[charInfo.vertexIndex + j];
+                    meshInfo.vertices[charInfo.vertexIndex+ j] =
+                        orig + new Vector3(0, Mathf.Sin(Time.time * 4f + orig.x * 0.01f) * 30f, 0);
+                    meshInfo.colors32[charInfo.vertexIndex + j] = new Color32((byte)color.x, (byte)color.y, (byte)color.z, (byte)color.w);
                 }
-            }
-        }
+                
     }
     
 }

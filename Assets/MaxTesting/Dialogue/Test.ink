@@ -1,7 +1,7 @@
 TEst,TEst <\\ 3 lol
-lolol
+<color=\#17A589FF>lo</color>lol
     *[Hello World]
-    <color=\#008000FF>What do you want from me</color>
-    <color=\#008000FF><wobble>Hallo</wobble> <shake>Du Arsch</shake> <wobble>Beweg Dich</wobble></color>
+    <color=\#008000FF>What</color> do you want from me
+    <color=\#800080FF><wobble>Hallo</wobble></color> <color=\#000080FF><shake>Du als ich Arsch</shake> <wobble>Beweg Dich</wobble></color>
     *[Bye Bye]
-    Why do you waste my Time
+    <color=\#685479FF><wobble>Why do you waste</wobble> my Time</color>
