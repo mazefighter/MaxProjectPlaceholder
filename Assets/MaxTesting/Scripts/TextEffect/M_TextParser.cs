@@ -14,26 +14,42 @@ public class M_TextParser
     public List<M_TextCharacter> ParseText(string parseString)
     {
         string effectString = "";
-        M_Effects effects;
+        M_EffectEnum effectEnum;
         int4 color = defaulColor;
 
         for (int i = 0; i < parseString.Length; i++)
         {
             if (parseString[i] == '<')
             {
-                if (parseString[i + 1] == '\\')
+                try
                 {
-                    finishedString.Add(new M_TextCharacter(parseString[i], M_Effects.normal, color));
-                    i++;
+                    if (parseString[i + 1] == '\\')
+                    {
+                        finishedString.Add(new M_TextCharacter(parseString[i], M_EffectEnum.normal, color));
+                        i++;
+                        continue;
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Well");
                     continue;
                 }
-
+                
                 effectString += parseString[i];
-                while (parseString[i] != '>')
+                try
                 {
-                    i++;
-                    effectString += parseString[i];
+                    while (parseString[i] != '>')
+                    {
+                        i++;
+                        effectString += parseString[i];
+                    }
                 }
+                catch (Exception e)
+                {
+                    continue;
+                }
+                
 
                 if (effectString.StartsWith("<color="))
                 {
@@ -55,40 +71,57 @@ public class M_TextParser
                 {
                     color = defaulColor;
                 }
-                switch (effectString)
-                {
-                    case "<wobble>":
-                        while (parseString[i] != '<' || parseString[i+1] != '/' )
-                        {
-                            i++;
-                            finishedString.Add(new M_TextCharacter(parseString[i], M_Effects.wobble, color));
-                        }
 
-                        finishedString.RemoveAt(finishedString.Count - 1);
-                        break;
+                try
+                {
+                    switch (effectString)
+                    {
+                        case "<wobble>":
+                            while (parseString[i] != '<' || parseString[i+1] != '/' )
+                            {
+                                i++;
+                                finishedString.Add(new M_TextCharacter(parseString[i], M_EffectEnum.wobble, color));
+                            }
+
+                            finishedString.RemoveAt(finishedString.Count - 1);
+                            break;
                     
-                    case "<shake>":
-                        while (parseString[i] != '<' || parseString[i+1] != '/')
-                        {
-                            i++;
-                            finishedString.Add(new M_TextCharacter(parseString[i], M_Effects.shake, color));
-                        }
+                        case "<shake>":
+                            while (parseString[i] != '<' || parseString[i+1] != '/')
+                            {
+                                i++;
+                                finishedString.Add(new M_TextCharacter(parseString[i], M_EffectEnum.shake, color));
+                            }
 
-                        finishedString.RemoveAt(finishedString.Count - 1);
-                        break;
+                            finishedString.RemoveAt(finishedString.Count - 1);
+                            break;
+                    }
+                    while (parseString[i] != '>')
+                    {
+                        i++;
+                    }
                 }
-                while (parseString[i] != '>')
+                catch (Exception e)
                 {
-                    i++;
+                    continue;
                 }
+                
             }
             else
             {
-                finishedString.Add(new M_TextCharacter(parseString[i], M_Effects.normal, color));
+                finishedString.Add(new M_TextCharacter(parseString[i], M_EffectEnum.normal, color));
             }
             effectString = "";
         }
-        finishedString.RemoveAt(finishedString.Count - 1);
-        return finishedString;
+
+        try
+        {
+            return finishedString;
+        }
+        catch (Exception e)
+        {
+            return new List<M_TextCharacter>();
+        }
+        
     }
 }

@@ -1,4 +1,4 @@
-public enum M_Effects 
+public enum M_EffectEnum 
 {
     wobble,
     shake,

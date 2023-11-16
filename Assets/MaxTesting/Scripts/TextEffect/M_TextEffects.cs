@@ -78,13 +78,13 @@ public class M_TextEffects : MonoBehaviour
             int position = 0;
             foreach (M_TextCharacter character in parsedText)
             {
-                switch (character._effect)
+                switch (character.effectEnum)
                 {
-                    case M_Effects.wobble:
+                    case M_EffectEnum.wobble:
                         Wobble(position, textInfo, character._color);
                         position++;
                         break;
-                    case M_Effects.shake:
+                    case M_EffectEnum.shake:
                         Shake(position, textInfo, character._color);
                         position++;
                         break;
