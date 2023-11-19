@@ -1,6 +1,6 @@
 ->Start
 ===Start===
-Du öffnest die Augen und findest dich in einem dichten Wald wieder. Die Bäume ragen hoch in den Himmel, und der Boden ist mit Moos bedeckt. Ein <windy>sanfter Wind weht durch die Blätter</windy>, und die Vögel zwitschern über dir. Du spürst, wie die Sonnenstrahlen durch das Blätterdach dringen. In deiner Hand hältst du eine alte Karte mit verschiedenen Wegen durch den Wald.
+Du öffnest die Augen und findest dich in einem dichten Wald wieder.Die Bäume ragen hoch in den Himmel, und der Boden ist mit <color=\#196f3dAA>Moos bedeckt</color>. Ein <windy>sanfter Wind weht durch die Blätter</windy>, und die Vögel zwitschern über dir. Du spürst, wie die <color=\#fff689EE><swoosh>Sonnenstrahlen</swhoosh></color> durch das Blätterdach dringen. In deiner Hand hältst du eine <old>alte Karte</old> mit verschiedenen Wegen durch den Wald.
 
 Welchen Weg möchtest du einschlagen?
 *[Den schmalen Pfad, der nach Osten führt]
@@ -8,26 +8,26 @@ Welchen Weg möchtest du einschlagen?
 *[Der breiten Straße, die nach Westen verläuft.]
 ->BreiteStrasseNachWesten
 === DenSchmalenPfadDerNachOsten ===
-Du entscheidest dich für den schmalen Pfad und beginnst, dich durch das dichte Unterholz zu bewegen. Die Bäume stehen dicht beieinander, und es wird zunehmend schwieriger, dich vorwärts zu bewegen. Nach einer Weile hörst du in der Ferne ein leises Knurren, gefolgt von Ästen, die brechen.
+Du entscheidest dich für den schmalen Pfad und beginnst, dich durch das dichte Unterholz zu bewegen. Die Bäume stehen dicht beieinander, und es wird <speed=\#0,7>zunehmend schwieriger, dich vorwärts zu bewegen</speed>. Nach einer Weile hörst du in der Ferne ein leises <shake>Knurren, gefolgt von Ästen, die brechen.</shake>
 Was nun?
-*[Schneller voranschreiten und dem Geräusch auszuweichen.]
+*[<shake>Schneller voranschreiten</shake> und dem Geräusch auszuweichen.]
 ->SchnellerVoranschreiten
-*[Langsamer gehen und versuchen, das Knurren zu identifizieren.]
+*[<windy>Langsamer gehen</windy> und versuchen, das Knurren zu identifizieren.]
 ->KnurrenIdentifizieren
 
 === SchnellerVoranschreiten ===
-Du beschleunigst deine Schritte, um dem unheimlichen Knurren zu entkommen. Die Bäume fliegen an dir vorbei, während du dich eilig durch das Dickicht bewegst. Das Knurren wird lauter, und du kannst das Rascheln von Blättern und Ästen näher kommen hören.
+<shake>Du beschleunigst deine Schritte, um dem unheimlichen Knurren zu entkommen.</shake> Die Bäume fliegen an dir vorbei, während du dich eilig durch das Dickicht bewegst. Das <shake>Knurren wird lauter</shake>, und du kannst das Rascheln von Blättern und Ästen näher kommen hören.
 
 Plötzlich stehst du vor einer Kreuzung im Pfad.
-*[Den Weg nach links einschlagen.]
+*[<shake>Den Weg nach links einschlagen.</shake>]
 ->DenWegNachLinks
-*[Den Weg nach rechts wählen.]
+*[<shake>Den Weg nach rechts wählen.</shake>]
 ->DenWegNachRechts
 
 ===DenWegNachLinks===
-Du biegst nach links ab und setzt deinen Weg fort. Das Knurren wird immer lauter, und du spürst, wie sich die Atmosphäre um dich herum verdichtet. Der Pfad führt dich tiefer in den Wald hinein, und die Bäume scheinen sich über dir zu neigen.
+Du biegst nach links ab und setzt deinen Weg fort. <shake>Das Knurren wird immer lauter</shake>, und du spürst, wie sich die Atmosphäre um dich herum verdichtet. <color=\#4d5656FF> Der Pfad führt dich tiefer in den Wald hinein, und die Bäume scheinen sich über dir zu neigen.
 
-Plötzlich taucht vor dir eine Höhle auf. Das Knurren ist nun sehr nah, und du kannst schemenhaft die Umrisse eines Tieres erkennen. Das Knurren wird lauter, und du kannst nicht mehr zurück.
+Plötzlich taucht vor dir eine Höhle auf. Das <shake>Knurren ist nun sehr nah<shake>, und du kannst schemenhaft die Umrisse eines Tieres erkennen. Das Knurren wird lauter, und du kannst nicht mehr zurück.</color>
 
 *[Die Höhle betreten und nach einer Möglichkeit suchen, das Tier zu umgehen.]
 ->DieHoehleBetreten
@@ -35,9 +35,9 @@ Plötzlich taucht vor dir eine Höhle auf. Das Knurren ist nun sehr nah, und du 
 ->EinenRueckzugVersuchen
 
 ===DieHoehleBetreten===
-Du eilst zur Höhle und betrittst sie. Die Dunkelheit umgibt dich, und das Knurren ist nun direkt vor dir. Du tastest dich vorsichtig durch die Höhle und versuchst, dich leise zu bewegen.
+Du eilst zur Höhle und betrittst sie. <color=\#17202aFF> Die Dunkelheit umgibt dich, und das Knurren ist nun direkt vor dir. Du tastest dich vorsichtig durch die Höhle und versuchst, dich leise zu bewegen.
 
-Plötzlich spürst du, wie etwas Großes und Pelziges an dir vorbeistreift. Das Knurren wird leiser, als das Tier die Höhle verlässt. Du atmest erleichtert auf und wagst einen Blick nach draußen.
+Plötzlich spürst du, wie etwas Großes und Pelziges an dir vorbeistreift. Das Knurren wird leiser, als das Tier die Höhle verlässt. Du atmest erleichtert auf und wagst einen Blick nach draußen.</color>
 
 Die Luft ist rein, und du bist sicher. Du hast das knurrende Tier erfolgreich umgangen.
 

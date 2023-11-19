@@ -20,16 +20,18 @@ public class M_TextEffects : MonoBehaviour
    public float AppearEndvalue = 1;
 
    private bool ValidCharacter;
+   private float defaulSpeed;
 
    private M_Text mText;
    private void Awake()
    {
        mText = GetComponent<M_Text>();
+       defaulSpeed = mText.AllEffectsSpeed;
    }
 
    public IEnumerator CoUpdate(TextMeshProUGUI _textMeshProUGUI, List<M_TextCharacter> parsedText)
-     {
-         while (true)
+   {
+       while (true)
          {
              _textMeshProUGUI.ForceMeshUpdate();
              TMP_TextInfo textInfo = _textMeshProUGUI.textInfo;
@@ -62,18 +64,28 @@ public class M_TextEffects : MonoBehaviour
                      switch (character.effectEnum)
                      {
                          case M_EffectEnum.wobble:
-                             Wobble(position, textInfo, character._color, AppearUsedValue);
+                             Wobble(position, textInfo, character._color, AppearUsedValue, character.speed);
                              position++;
                              break;
                          case M_EffectEnum.shake:
-                             Shake(position, textInfo, character._color, AppearUsedValue);
+                             Shake(position, textInfo, character._color, AppearUsedValue, character.speed);
                              position++;
                              break;
                          case M_EffectEnum.windy:
-                             Windy(position, textInfo, character._color, AppearUsedValue);
+                             Windy(position, textInfo, character._color, AppearUsedValue, character.speed);
+                             position++;
+                             break;
+                         case M_EffectEnum.old:
+                             Old(position, textInfo, character._color, AppearUsedValue, character.speed);
+                             position++;
+                             break;
+                         case M_EffectEnum.colorswoosh:
+                             ColorSwoosh(position, textInfo, character._color, AppearUsedValue, character.speed);
                              position++;
                              break;
                          default:
+                             
+                             
                              TMP_CharacterInfo charInfo = textInfo.characterInfo[position];
 
                              TMP_MeshInfo meshInfo = textInfo.meshInfo[charInfo.materialReferenceIndex];
@@ -129,8 +141,16 @@ public class M_TextEffects : MonoBehaviour
              {
                  
              }
-
-             yield return new WaitForSeconds(mText.AllEffectsSpeed);
+             
+             if (mText != null)
+             {
+                 yield return new WaitForSeconds(mText.AllEffectsSpeed);
+             }
+             else
+             {
+                 yield return new WaitForSeconds(GetComponent<M_Text>().AllEffectsSpeed);
+             }
+             
          }
      }
 
@@ -139,7 +159,7 @@ public class M_TextEffects : MonoBehaviour
 
     
 
-    private void Shake(int position, TMP_TextInfo textInfo, int4 color, float appearPercent)
+    private void Shake(int position, TMP_TextInfo textInfo, int4 color, float appearPercent, float speed)
     {
         
                 TMP_CharacterInfo charInfo = textInfo.characterInfo[position];
@@ -163,7 +183,7 @@ public class M_TextEffects : MonoBehaviour
                 }
     }
 
-    private void Wobble(int position, TMP_TextInfo textInfo, int4 color, float appearPercent)
+    private void Wobble(int position, TMP_TextInfo textInfo, int4 color, float appearPercent, float speed)
     {
         
                 TMP_CharacterInfo charInfo = textInfo.characterInfo[position];
@@ -185,9 +205,8 @@ public class M_TextEffects : MonoBehaviour
                 
     }
 
-    private void Windy(int position, TMP_TextInfo textInfo, int4 color, float appearPercent)
+    private void Windy(int position, TMP_TextInfo textInfo, int4 color, float appearPercent, float speed)
     {
-        
         TMP_CharacterInfo charInfo = textInfo.characterInfo[position];
                 
         TMP_MeshInfo meshInfo = textInfo.meshInfo[charInfo.materialReferenceIndex];
@@ -203,6 +222,48 @@ public class M_TextEffects : MonoBehaviour
             meshInfo.vertices[charInfo.vertexIndex+ j] =
                 orig + new Vector3(Mathf.Sin(Time.time * 4f + orig.x * 0.01f) * 5f,0 , 0);
             meshInfo.colors32[charInfo.vertexIndex + j] = new Color32((byte)color.x, (byte)color.y, (byte)color.z, (byte)(color.w * appearPercent));
+        }
+                
+    }
+    
+    private void Old(int position, TMP_TextInfo textInfo, int4 color, float appearPercent, float speed)
+    {
+        TMP_CharacterInfo charInfo = textInfo.characterInfo[position];
+                
+
+        TMP_MeshInfo meshInfo = textInfo.meshInfo[charInfo.materialReferenceIndex];
+
+        if (charInfo.character is ' ' or '\n')
+        {
+            return;
+        }
+
+        for (int j = 0; j < 4; j++)
+        {
+            meshInfo.colors32[charInfo.vertexIndex + j] = new Color32((byte)color.x, (byte)color.y, (byte)color.z, (byte)(color.w * appearPercent));
+        }
+    }
+    
+    private void ColorSwoosh(int position, TMP_TextInfo textInfo, int4 color, float appearPercent, float speed)
+    {
+
+        
+        TMP_CharacterInfo charInfo = textInfo.characterInfo[position];
+                
+        TMP_MeshInfo meshInfo = textInfo.meshInfo[charInfo.materialReferenceIndex];
+                
+        if (charInfo.character is ' ' or '\n')
+        {
+            return;
+        }
+
+        for (int j = 0; j < 4; j++)
+        {
+            
+            float theta = Mathf.Sin(Time.time / 5f * 2 * Mathf.PI);
+            
+                Color sinusColor = Color.Lerp(new Color(color.x,color.y,color.z,color.w), new Color(255,255,255,255), (Mathf.Sin(theta) + 1) / 2);
+                meshInfo.colors32[charInfo.vertexIndex + j] = new Color32((byte)sinusColor.r,(byte)sinusColor.g,(byte)sinusColor.b,(byte)(color.w*appearPercent));
         }
                 
     }

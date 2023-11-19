@@ -26,6 +26,8 @@ public class M_Text : MonoBehaviour
         if (Application.isPlaying)
         {
             GetComponent<TextMeshProUGUI>().color = Color.clear;
+            _textMeshProUGUI = GetComponent<TextMeshProUGUI>();
+            WriteText(text, _textMeshProUGUI);
         }
     }
 

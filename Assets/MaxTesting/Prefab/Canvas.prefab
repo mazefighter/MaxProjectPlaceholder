@@ -461,7 +461,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: 
   FadeIn: 1
+  AllEffectsSpeed: 0.02
   FadeSpeed: 0.1
+  skipAppear: 0
 --- !u!114 &2967707939566613302
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -489,7 +491,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2967707939663361752}
   - component: {fileID: 2967707939663361754}
+  - component: {fileID: 2244622347880914757}
   - component: {fileID: 2967707939663361755}
+  - component: {fileID: 6811358778011098637}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -525,6 +529,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2967707939663361753}
   m_CullTransparentMesh: 1
+--- !u!114 &2244622347880914757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2967707939663361753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05888ebeff3e96d45b73650a96cb74be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: 
+  FadeIn: 1
+  AllEffectsSpeed: 0.02
+  FadeSpeed: 0.3
+  skipAppear: 0
 --- !u!114 &2967707939663361755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -545,7 +566,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -614,6 +635,23 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6811358778011098637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2967707939663361753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 015042599ba662e4c8578afc3c41b0ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AppearStartValue: 0
+  characterAppear: 0
+  AppearCurrentValue: 0
+  AppearUsedValue: 0
+  AppearEndvalue: 1
 --- !u!1 &2967707939733837615
 GameObject:
   m_ObjectHideFlags: 0
@@ -624,7 +662,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2967707939733837614}
   - component: {fileID: 2967707939733837616}
+  - component: {fileID: 4660561949108012494}
   - component: {fileID: 2967707939733837617}
+  - component: {fileID: 8567930927464387541}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -660,6 +700,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2967707939733837615}
   m_CullTransparentMesh: 1
+--- !u!114 &4660561949108012494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2967707939733837615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05888ebeff3e96d45b73650a96cb74be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: 
+  FadeIn: 1
+  AllEffectsSpeed: 0.02
+  FadeSpeed: 0.3
+  skipAppear: 0
 --- !u!114 &2967707939733837617
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -680,7 +737,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -749,6 +806,23 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8567930927464387541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2967707939733837615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 015042599ba662e4c8578afc3c41b0ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AppearStartValue: 0
+  characterAppear: 0
+  AppearCurrentValue: 0
+  AppearUsedValue: 0
+  AppearEndvalue: 1
 --- !u!1 &2967707940114670202
 GameObject:
   m_ObjectHideFlags: 0
@@ -893,7 +967,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2967707940166957866}
   - component: {fileID: 2967707940166957868}
+  - component: {fileID: 5428814452655518818}
   - component: {fileID: 2967707940166957869}
+  - component: {fileID: 6722994593525340166}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -929,6 +1005,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2967707940166957867}
   m_CullTransparentMesh: 1
+--- !u!114 &5428814452655518818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2967707940166957867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05888ebeff3e96d45b73650a96cb74be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: 
+  FadeIn: 1
+  AllEffectsSpeed: 0.02
+  FadeSpeed: 0.3
+  skipAppear: 0
 --- !u!114 &2967707940166957869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -949,7 +1042,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1018,6 +1111,23 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6722994593525340166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2967707940166957867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 015042599ba662e4c8578afc3c41b0ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AppearStartValue: 0
+  characterAppear: 0
+  AppearCurrentValue: 0
+  AppearUsedValue: 0
+  AppearEndvalue: 1
 --- !u!1 &2967707940542342183
 GameObject:
   m_ObjectHideFlags: 0

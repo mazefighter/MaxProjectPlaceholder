@@ -5,7 +5,9 @@ using Ink.Runtime;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 public class M_DialogueManager : MonoBehaviour
 {
@@ -20,9 +22,13 @@ public class M_DialogueManager : MonoBehaviour
     
     [SerializeField] private GameObject[] choices;
 
-    private TextMeshProUGUI[] choicesText;
+    private M_Text[] choicesText;
+    private Button[] choiceButtons;
 
     private Story currentStory;
+    
+    //For demo purposes
+    [SerializeField] private TextAsset inkJson;
 
     public bool dialogueIsPlaying { get; private set; }
     
@@ -44,11 +50,16 @@ public class M_DialogueManager : MonoBehaviour
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
 
-        choicesText = new TextMeshProUGUI[choices.Length];
+        choicesText = new M_Text[choices.Length];
         for (int i = 0; i < choices.Length; i++)
         {
-            choicesText[i] = choices[i].GetComponentInChildren<TextMeshProUGUI>();
+            choicesText[i] = choices[i].GetComponentInChildren<M_Text>();
         }
+
+        
+        
+        //For demo purposes
+        EnterDialogueMode(inkJson);
     }
 
     public static M_DialogueManager GetInstance()
@@ -62,23 +73,27 @@ public class M_DialogueManager : MonoBehaviour
         {
             return;
         }
+        
 
-       
         
         if (M_InputManager.GetInstance().GetSubmitPressed())
+        {
+            ContinueStory();
+            dialogueText.skipAppear = false;
+        }
+
+        if (M_InputManager.GetInstance().GetSkipPressed())
         {
             if (!dialogueText.skipAppear)
             {
                 dialogueText.skipAppear = true;
-                
-            }
-            else
-            {
-                dialogueText.skipAppear = false;
-                ContinueStory();
+
             }
             
         }
+        
+        
+        
     }
     
     public void EnterDialogueMode(TextAsset inkJSON)
@@ -109,6 +124,9 @@ public class M_DialogueManager : MonoBehaviour
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
+        
+        //demo
+        SceneManager.LoadScene("DemoSceneAuswahl");
     }
 
     private void DisplayChoices()
@@ -124,7 +142,7 @@ public class M_DialogueManager : MonoBehaviour
         for (int i = 0; i < currentChoices.Count; i++)
         {
             choices[i].gameObject.SetActive(true);
-            choicesText[i].text = currentChoices[i].text;
+            choicesText[i].TextOnCodeChange(currentChoices[i].text);
             index++;
         }
 
@@ -142,9 +160,9 @@ public class M_DialogueManager : MonoBehaviour
         yield return new WaitForEndOfFrame();
         EventSystem.current.SetSelectedGameObject(choices[0].gameObject);
     }
-
-    public void MakeChoice(int choiceIndex)
+    
+    public void MakeChoice(int index)
     {
-        currentStory.ChooseChoiceIndex(choiceIndex);
+        currentStory.ChooseChoiceIndex(index);
     }
 }
