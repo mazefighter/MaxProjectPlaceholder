@@ -14,7 +14,7 @@ public class M_DialogueManager : MonoBehaviour
     
     [SerializeField] private GameObject dialoguePanel;
 
-    [SerializeField] private TextMeshProUGUI dialogueText;
+    [SerializeField] private M_Text dialogueText;
 
     [Header("Choices UI")] 
     
@@ -62,11 +62,22 @@ public class M_DialogueManager : MonoBehaviour
         {
             return;
         }
+
+       
         
         if (M_InputManager.GetInstance().GetSubmitPressed())
         {
-            M_TextEffects.GetInstance().submitPressed = true;
-            ContinueStory();
+            if (!dialogueText.skipAppear)
+            {
+                dialogueText.skipAppear = true;
+                
+            }
+            else
+            {
+                dialogueText.skipAppear = false;
+                ContinueStory();
+            }
+            
         }
     }
     
@@ -83,7 +94,7 @@ public class M_DialogueManager : MonoBehaviour
         if (currentStory.canContinue)
         {
             tempDialogueText = currentStory.Continue();
-            M_TextEffects.GetInstance().WriteText(tempDialogueText, dialogueText);
+            dialogueText.TextOnCodeChange(tempDialogueText);
             DisplayChoices();
         }
         else

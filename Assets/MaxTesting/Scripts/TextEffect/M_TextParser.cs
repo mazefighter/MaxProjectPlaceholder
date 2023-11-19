@@ -14,7 +14,6 @@ public class M_TextParser
     public List<M_TextCharacter> ParseText(string parseString)
     {
         string effectString = "";
-        M_EffectEnum effectEnum;
         int4 color = defaulColor;
 
         for (int i = 0; i < parseString.Length; i++)
@@ -30,7 +29,7 @@ public class M_TextParser
                         continue;
                     }
                 }
-                catch (Exception e)
+                catch
                 {
                     Console.WriteLine("Well");
                     continue;
@@ -45,7 +44,7 @@ public class M_TextParser
                         effectString += parseString[i];
                     }
                 }
-                catch (Exception e)
+                catch
                 {
                     continue;
                 }
@@ -95,13 +94,22 @@ public class M_TextParser
 
                             finishedString.RemoveAt(finishedString.Count - 1);
                             break;
+                        case "<windy>":
+                            while (parseString[i] != '<' || parseString[i+1] != '/')
+                            {
+                                i++;
+                                finishedString.Add(new M_TextCharacter(parseString[i], M_EffectEnum.windy, color));
+                            }
+
+                            finishedString.RemoveAt(finishedString.Count - 1);
+                            break;
                     }
                     while (parseString[i] != '>')
                     {
                         i++;
                     }
                 }
-                catch (Exception e)
+                catch 
                 {
                     continue;
                 }
@@ -113,12 +121,12 @@ public class M_TextParser
             }
             effectString = "";
         }
-
+        
         try
         {
             return finishedString;
         }
-        catch (Exception e)
+        catch 
         {
             return new List<M_TextCharacter>();
         }

@@ -9,6 +9,8 @@ public class M_TextCharacter
     public int4 _color { get; }
     public char _character { get; }
 
+    public float AppearPercent;
+
     public M_TextCharacter(char _character, M_EffectEnum effectEnum, int4 _color)
     {
         this.effectEnum = effectEnum ;

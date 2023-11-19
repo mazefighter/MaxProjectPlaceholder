@@ -1,0 +1,10 @@
+1. M_Text Script auf das Objekt mit dem TextMeshPro ziehen
+2. Nur im Textfeld des Scripts M_Text schreiben
+
+
+
+Anlegen neuer commands
+1.M_EffectEnum öffnen und gewünschten Effect namen einfügen
+2.M_TextParser öffnen und im switch den command so wie die anderen hinzufügen. Nur bei new M_TextCharacter den effect im enum zum neuen ändern
+3.Im Script M_TextEffect ein neues case für den neuen effect im switch anlegen
+4.Eine neue Methode erstellen, welche dann im Switch an der neuen stelle aufgerufen wird.
